@@ -152,7 +152,7 @@ variable "shared_vpc" {
   description = "Shared VPC configuration for the project."
   type = object({
     enabled = bool
-    service_projects = optional(list(string), [])
+    service_projects = list(string)
   })
 }
 variable "vpc" {
