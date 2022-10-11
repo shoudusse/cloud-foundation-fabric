@@ -148,6 +148,13 @@ variable "service_identities_iam" {
   nullable    = false
 }
 
+variable "shared_vpc" {
+  description = "Shared VPC configuration for the project."
+  type = object({
+    enabled = bool
+    service_projects = optional(list(string), [])
+  })
+}
 variable "vpc" {
   description = "VPC configuration for the project."
   type = object({

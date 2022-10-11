@@ -98,6 +98,9 @@ locals {
   vpc = coalesce(var.vpc, {
     host_project = null, gke_setup = null, subnets_iam = null
   })
+  shared_vpc = coalesce(var.shared_vpc, {
+    enabled = false, service_projects = []
+  })
   vpc_cloudservices = (
     local.vpc_gke_service_agent ||
     contains(var.services, "compute.googleapis.com")
@@ -168,6 +171,10 @@ module "project" {
         local.vpc_gke_service_agent ? "container-engine" : null
       ])
     }
+  }
+  shared_vpc_host_config = var.shared_vpc == null ? null : {
+    enabled = local.shared_vpc.enabled
+    service_projects = local.shared_vpc.service_projects
   }
 }
 
